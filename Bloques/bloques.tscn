@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dejoa0m3i2mwp"]
+
+[ext_resource type="Texture2D" uid="uid://b7ee17avkdtpw" path="res://elementos/imagenesElementosEscenario/tile_0009.png" id="1_6kri6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76632"]
+size = Vector2(18, 18)
+
+[node name="bloques" type="StaticBody2D"]
+scale = Vector2(2.0264, 1.66416)
+
+[node name="Tile0009" type="Sprite2D" parent="."]
+texture = ExtResource("1_6kri6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_76632")

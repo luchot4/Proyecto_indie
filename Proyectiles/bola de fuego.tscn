@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bghte3tuj2lo3"]
+
+[ext_resource type="Texture2D" uid="uid://g2wtwu2j8tag" path="res://elementos/imagenesProyectiles/bola2.png" id="1_tfu8r"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbds3"]
+radius = 11.097
+height = 41.9944
+
+[node name="bola de fuego" type="RigidBody2D"]
+
+[node name="Bola2" type="Sprite2D" parent="."]
+scale = Vector2(0.0857143, 0.0966851)
+texture = ExtResource("1_tfu8r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, -2)
+rotation = -1.5872
+shape = SubResource("CapsuleShape2D_sbds3")

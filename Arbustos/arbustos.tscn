@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5r8oecfy8dvu"]
+
+[ext_resource type="Texture2D" uid="uid://dpk546wo4lptv" path="res://elementos/imagenesElementosEscenario/tile_0017.png" id="1_ctrgj"]
+[ext_resource type="Texture2D" uid="uid://dv7ukxa4xs04n" path="res://elementos/imagenesElementosEscenario/tile_0018.png" id="2_xly0y"]
+[ext_resource type="Texture2D" uid="uid://2rjrjm16d4jg" path="res://elementos/imagenesElementosEscenario/tile_0019.png" id="3_apng4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4hbb"]
+size = Vector2(48.5, 7)
+
+[node name="arbustos" type="StaticBody2D"]
+position = Vector2(0, 2)
+scale = Vector2(1.34652, 1.47727)
+
+[node name="Tile0017" type="Sprite2D" parent="."]
+position = Vector2(-14, -2)
+texture = ExtResource("1_ctrgj")
+
+[node name="Tile0018" type="Sprite2D" parent="."]
+position = Vector2(4, -2)
+texture = ExtResource("2_xly0y")
+
+[node name="Tile0019" type="Sprite2D" parent="."]
+position = Vector2(21, -2)
+texture = ExtResource("3_apng4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.25, -5)
+shape = SubResource("RectangleShape2D_u4hbb")
+one_way_collision = true

@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5c1fjpylusxt"]
+
+[ext_resource type="Texture2D" uid="uid://b18dteinlpyah" path="res://elementos/imagenesPlataformas/piso2.png" id="1_xjqs0"]
+[ext_resource type="Texture2D" uid="uid://qbdqxecxtt8c" path="res://elementos/imagenesPlataformas/piso3.png" id="2_d5tql"]
+[ext_resource type="Texture2D" uid="uid://bulmicueb02il" path="res://elementos/imagenesPlataformas/piso4.png" id="3_2hbiv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhgnb"]
+size = Vector2(317, 6)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+position = Vector2(-3, 8)
+scale = Vector2(1.67983, 1.80188)
+
+[node name="Piso2" type="Sprite2D" parent="."]
+position = Vector2(-149, -2)
+texture = ExtResource("1_xjqs0")
+
+[node name="Piso3" type="Sprite2D" parent="."]
+position = Vector2(-132, -2)
+scale = Vector2(0.888889, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso4" type="Sprite2D" parent="."]
+position = Vector2(-116, -2)
+scale = Vector2(0.888889, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso5" type="Sprite2D" parent="."]
+position = Vector2(-86, -2)
+scale = Vector2(0.888889, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso6" type="Sprite2D" parent="."]
+position = Vector2(-70, -2)
+scale = Vector2(0.888889, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso7" type="Sprite2D" parent="."]
+position = Vector2(-54, -2)
+scale = Vector2(0.888889, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso8" type="Sprite2D" parent="."]
+position = Vector2(-39, -2)
+scale = Vector2(0.790123, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso9" type="Sprite2D" parent="."]
+position = Vector2(-101, -2)
+scale = Vector2(0.790123, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso10" type="Sprite2D" parent="."]
+position = Vector2(47, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso11" type="Sprite2D" parent="."]
+position = Vector2(32, -2)
+scale = Vector2(0.874727, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso12" type="Sprite2D" parent="."]
+position = Vector2(17.4118, -2)
+scale = Vector2(0.843136, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso13" type="Sprite2D" parent="."]
+position = Vector2(2.00003, -2)
+scale = Vector2(0.897061, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso14" type="Sprite2D" parent="."]
+position = Vector2(-13, -2)
+scale = Vector2(0.803307, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso15" type="Sprite2D" parent="."]
+position = Vector2(-26, -2)
+scale = Vector2(0.682442, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso16" type="Sprite2D" parent="."]
+position = Vector2(62, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso17" type="Sprite2D" parent="."]
+position = Vector2(77, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso18" type="Sprite2D" parent="."]
+position = Vector2(92, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso19" type="Sprite2D" parent="."]
+position = Vector2(107, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso20" type="Sprite2D" parent="."]
+position = Vector2(122, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso21" type="Sprite2D" parent="."]
+position = Vector2(137, -2)
+scale = Vector2(0.833213, 1)
+texture = ExtResource("2_d5tql")
+
+[node name="Piso22" type="Sprite2D" parent="."]
+position = Vector2(153, -2)
+texture = ExtResource("3_2hbiv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, -6)
+shape = SubResource("RectangleShape2D_xhgnb")
