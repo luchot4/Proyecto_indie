@@ -43,8 +43,9 @@ script = ExtResource("1_vvoct")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_pd38i")
 animation = &"Carpi_Iddle"
-frame_progress = 0.678856
+frame_progress = 0.81527
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0.333333, 1.66667)
 shape = SubResource("CapsuleShape2D_eorx2")
