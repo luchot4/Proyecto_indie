@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gn3cqxu15ag2"
-path="res://.godot/imported/Appearing (96x96).png-f1b58102b738c974e3930d0eaa5da317.ctex"
+uid="uid://o50c2uwxpb1u"
+path="res://.godot/imported/Jump (32x32).png-35b1148ac7f7b02ad55eb56aad0330b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Jugador/Mask Dude/Appearing (96x96).png"
-dest_files=["res://.godot/imported/Appearing (96x96).png-f1b58102b738c974e3930d0eaa5da317.ctex"]
+source_file="res://Assets/Jugador_Assets/Mask Dude/Jump (32x32).png"
+dest_files=["res://.godot/imported/Jump (32x32).png-35b1148ac7f7b02ad55eb56aad0330b6.ctex"]
 
 [params]
 

@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Juego hit and run prueba"
-run/main_scene="uid://y1krkuitbrd7"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+run/main_scene="uid://bqrsggp3nhn0o"
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1092
+window/size/viewport_height=614
 
 [rendering]
 

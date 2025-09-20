@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://k07pucxdk1n3"]
+
+[ext_resource type="Script" uid="uid://b46k3y2207pkb" path="res://Enemigos/carpincho_toxico.gd" id="2_ge1t4"]
+[ext_resource type="Texture2D" uid="uid://d1h52rbtso0kn" path="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico.png" id="3_bg80f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xqem"]
+atlas = ExtResource("3_bg80f")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ge1t4"]
+atlas = ExtResource("3_bg80f")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tkpfx"]
+atlas = ExtResource("3_bg80f")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yeiym"]
+atlas = ExtResource("3_bg80f")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7kmn5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xqem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ge1t4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tkpfx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yeiym")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ge1t4"]
+size = Vector2(36, 55)
+
+[node name="Carpincho_Toxico" type="CharacterBody2D"]
+script = ExtResource("2_ge1t4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_7kmn5")
+animation = &"Walking"
+autoplay = "Walking"
+frame = 3
+frame_progress = 0.38511285
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0.5)
+shape = SubResource("RectangleShape2D_ge1t4")
+
+[node name="RayCast2D_floor_detection" type="RayCast2D" parent="."]
+position = Vector2(23, 16)
+target_position = Vector2(0, 16)
+
+[node name="RayCast2D_wall_detection" type="RayCast2D" parent="."]
+target_position = Vector2(27, 0)

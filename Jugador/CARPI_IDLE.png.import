@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5bqo5iehttug"
-path="res://.godot/imported/Carpi_animation_iddle.png-0ac9766912ae698d9955fba5e06e4a20.ctex"
+uid="uid://cahgy71hw16gx"
+path="res://.godot/imported/CARPI_IDLE.png-e2b24c7d047d6cb6e4e70fa8287a9142.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Jugador/Carpi0/Carpi_animation_iddle.png"
-dest_files=["res://.godot/imported/Carpi_animation_iddle.png-0ac9766912ae698d9955fba5e06e4a20.ctex"]
+source_file="res://Jugador/CARPI_IDLE.png"
+dest_files=["res://.godot/imported/CARPI_IDLE.png-e2b24c7d047d6cb6e4e70fa8287a9142.ctex"]
 
 [params]
 

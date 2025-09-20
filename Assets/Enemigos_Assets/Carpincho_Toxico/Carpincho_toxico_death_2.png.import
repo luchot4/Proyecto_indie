@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcsjetr7vrocr"
-path="res://.godot/imported/Idle (32x32).png-f3e837a7959fe51bcfbcd8ae018a7167.ctex"
+uid="uid://bl7e84rjhitia"
+path="res://.godot/imported/Carpincho_toxico_death_2.png-6d749eebf46b8142ea4d2bf1328ad090.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Jugador/Mask Dude/Idle (32x32).png"
-dest_files=["res://.godot/imported/Idle (32x32).png-f3e837a7959fe51bcfbcd8ae018a7167.ctex"]
+source_file="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico_death_2.png"
+dest_files=["res://.godot/imported/Carpincho_toxico_death_2.png-6d749eebf46b8142ea4d2bf1328ad090.ctex"]
 
 [params]
 

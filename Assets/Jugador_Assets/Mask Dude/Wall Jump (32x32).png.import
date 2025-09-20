@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8fh3gu0rd3fr"
-path="res://.godot/imported/Run (32x32).png-9c7adb23dfe3fe960c9dffba1bca0036.ctex"
+uid="uid://dn0w5xatugm3p"
+path="res://.godot/imported/Wall Jump (32x32).png-3c1ed1292587a154232f3b4efe77e204.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Jugador/Mask Dude/Run (32x32).png"
-dest_files=["res://.godot/imported/Run (32x32).png-9c7adb23dfe3fe960c9dffba1bca0036.ctex"]
+source_file="res://Assets/Jugador_Assets/Mask Dude/Wall Jump (32x32).png"
+dest_files=["res://.godot/imported/Wall Jump (32x32).png-3c1ed1292587a154232f3b4efe77e204.ctex"]
 
 [params]
 
