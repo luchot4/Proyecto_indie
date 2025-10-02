@@ -5,13 +5,20 @@ const JUMP_VELOCITY = -400.0
 var appeared:bool = false
 var leaved_floor:bool = false
 var had_jump:bool = false
+@export var ataque: bool = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
+	$Area2D/CollisionAtaque.disabled = true
 	$animations.play("Appear")
 
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ataque"):
+		atacar_x()
+	pass
 func _physics_process(delta: float):
+	Animated()
 	##Add the gravity
 	if is_on_floor():
 		leaved_floor = false
@@ -75,3 +82,34 @@ func _on_animations_animation_finished() -> void:
 		
 func _on_coyote_timer_timeout() -> void:
 	print("Lol")
+func Animated():	#Para la animacion de Atacar
+	if !ataque:
+		if velocity.x < 0 :
+			$animations.flip_h = true
+		elif velocity.x > 0: 
+			$animations.flip_h = false
+		if is_on_floor():
+			if velocity.x != 0:
+				$animations.play("Run")
+			if velocity.x == 0: 
+				$animations.play("Iddle")
+		else:
+			$animations.play("Jump_up")
+		pass
+func atacar_x():   #Funcion para cuando se presiona la "x" se ataque
+	ataque = true
+	$Area2D/CollisionAtaque.disabled = false
+	$animations.play("Attack")
+	var direction = sign(velocity.x)
+	if direction != 0:
+		$Area2D/CollisionAtaque.position.x = direction * abs($Area2D/CollisionAtaque.position.x)
+	$animations.play("Attack")
+	await $animations.animation_finished
+	ataque = false
+	$Area2D/CollisionAtaque.disabled = true
+	
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemigo_daño"):
+		print("daño dado")
+	pass # Replace with function body.
