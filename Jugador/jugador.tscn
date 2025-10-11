@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://ca3j0rb4cufgm"]
+[gd_scene load_steps=66 format=3 uid="uid://ca3j0rb4cufgm"]
 
 [ext_resource type="Texture2D" uid="uid://gn3cqxu15ag2" path="res://Assets/Jugador_Assets/Mask Dude/Appearing (96x96).png" id="1_d8bf7"]
 [ext_resource type="Script" uid="uid://b70dmlofw627a" path="res://Jugador/jugador.gd" id="1_pfhhi"]
@@ -428,10 +428,15 @@ animations = [{
 size = Vector2(16, 27)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfhhi"]
-size = Vector2(48.75, 20)
+size = Vector2(44.5, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p16do"]
+size = Vector2(20, 26)
 
 [node name="Jugador" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(2, 2)
+collision_layer = 4
+collision_mask = 9
 script = ExtResource("1_pfhhi")
 
 [node name="ATAQUE" type="AnimatedSprite2D" parent="."]
@@ -460,11 +465,22 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Area2D" type="Area2D" parent="." groups=["golpe", "player"]]
+collision_layer = 4
+collision_mask = 8
 
 [node name="CollisionAtaque" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(29.625, 1)
+position = Vector2(29.75, 1)
 shape = SubResource("RectangleShape2D_pfhhi")
 debug_color = Color(0.89189994, 0.26517087, 0.4815743, 0.41960785)
+
+[node name="Area2D2" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_p16do")
+debug_color = Color(0.3764706, 0, 0, 0.41960785)
 
 [connection signal="animation_finished" from="animations" to="." method="_on_animations_animation_finished"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]

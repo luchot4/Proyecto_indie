@@ -188,12 +188,13 @@ animations = [{
 size = Vector2(36, 55)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkpfx"]
-size = Vector2(74, 60)
+size = Vector2(68, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiym"]
-size = Vector2(36, 56)
+size = Vector2(45, 56)
 
 [node name="Carpincho_Toxico" type="CharacterBody2D"]
+collision_layer = 8
 script = ExtResource("2_ge1t4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -215,18 +216,21 @@ target_position = Vector2(0, 16)
 target_position = Vector2(27, 0)
 
 [node name="ataque_carp_tox" type="Area2D" parent="."]
-visible = false
+collision_layer = 8
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ataque_carp_tox"]
-position = Vector2(9, -4)
+position = Vector2(11, 0)
 shape = SubResource("RectangleShape2D_tkpfx")
 
 [node name="AtaqueTimer" type="Timer" parent="." groups=["enemigo"]]
 
 [node name="Area_Daño" type="Area2D" parent="." groups=["enemigo_daño"]]
+collision_layer = 8
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Daño"]
-position = Vector2(2, 0)
+position = Vector2(-5, -1)
 shape = SubResource("RectangleShape2D_yeiym")
 debug_color = Color(0.73272264, 0.3802267, 0.72343373, 0.41960785)
 
