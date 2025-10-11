@@ -1,29 +1,29 @@
 [gd_scene load_steps=32 format=3 uid="uid://k07pucxdk1n3"]
 
 [ext_resource type="Script" uid="uid://b46k3y2207pkb" path="res://Enemigos/carpincho_toxico.gd" id="2_ge1t4"]
+[ext_resource type="Texture2D" uid="uid://dvkea5wxloxhk" path="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico_attck2.png" id="2_yeiym"]
 [ext_resource type="Texture2D" uid="uid://d1h52rbtso0kn" path="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico.png" id="3_bg80f"]
-[ext_resource type="Texture2D" uid="uid://dgw02sox8bexg" path="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico_attck.png" id="3_tkpfx"]
 [ext_resource type="Texture2D" uid="uid://bl7e84rjhitia" path="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico_death_2.png" id="3_yeiym"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kmn5"]
-atlas = ExtResource("3_tkpfx")
-region = Rect2(0, 0, 32, 32)
+atlas = ExtResource("2_yeiym")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j5qh0"]
-atlas = ExtResource("3_tkpfx")
-region = Rect2(32, 0, 32, 32)
+atlas = ExtResource("2_yeiym")
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8hwi"]
-atlas = ExtResource("3_tkpfx")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("2_yeiym")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gfvxt"]
-atlas = ExtResource("3_tkpfx")
-region = Rect2(96, 0, 32, 32)
+atlas = ExtResource("2_yeiym")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vksc"]
-atlas = ExtResource("3_tkpfx")
-region = Rect2(128, 0, 32, 32)
+atlas = ExtResource("2_yeiym")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7fti"]
 atlas = ExtResource("3_yeiym")
@@ -117,7 +117,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Ataque_tox",
-"speed": 12.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -201,6 +201,8 @@ script = ExtResource("2_ge1t4")
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_7kmn5")
 animation = &"Ataque_tox"
+frame = 4
+frame_progress = 1.0
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
