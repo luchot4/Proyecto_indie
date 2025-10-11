@@ -188,10 +188,10 @@ animations = [{
 size = Vector2(36, 55)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkpfx"]
-size = Vector2(68, 54)
+size = Vector2(66, 57)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiym"]
-size = Vector2(45, 56)
+size = Vector2(21, 58)
 
 [node name="Carpincho_Toxico" type="CharacterBody2D"]
 collision_layer = 8
@@ -220,7 +220,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ataque_carp_tox"]
-position = Vector2(11, 0)
+position = Vector2(14, 1)
 shape = SubResource("RectangleShape2D_tkpfx")
 
 [node name="AtaqueTimer" type="Timer" parent="." groups=["enemigo"]]
@@ -230,7 +230,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Daño"]
-position = Vector2(-5, -1)
+position = Vector2(-8.5, 1)
 shape = SubResource("RectangleShape2D_yeiym")
 debug_color = Color(0.73272264, 0.3802267, 0.72343373, 0.41960785)
 
