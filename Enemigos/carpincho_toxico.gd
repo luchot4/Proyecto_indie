@@ -110,7 +110,6 @@ func _on_ataque_timer_timeout() -> void:
 func _recibir_daño(cantidad):
 	if No_esta_muerto:
 		return 
-
 	vida_actual -= cantidad
 	print("Daño recibido:", cantidad)
 	print("Vida actual:", vida_actual)
@@ -122,13 +121,14 @@ func _recibir_daño(cantidad):
 func morir():
 	if No_esta_muerto:
 		return
-
+	
 	No_esta_muerto = true
 	atacando = false
+	
 	velocity = Vector2.ZERO
 	$AnimatedSprite2D.play("Death")
+	$CollisionShape2D.set_deferred("disabled", true)
 	$ataque_carp_tox.set_deferred("monitoring", false)
-	
 	await $AnimatedSprite2D.animation_finished
 	queue_free()
 
