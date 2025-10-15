@@ -6,6 +6,9 @@ var appeared:bool = false
 var leaved_floor:bool = false
 var had_jump:bool = false
 @export var ataque: bool = false
+var vida_max = 3
+var vida_actual = vida_max
+var No_esta_muerto = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -16,6 +19,8 @@ func _ready():
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ataque"):
 		atacar_x()
+	if ataque:
+		actualizar_hitbox()
 	pass
 func _physics_process(delta: float):
 	Animated()
@@ -107,9 +112,39 @@ func atacar_x():   #Funcion para cuando se presiona la "x" se ataque
 	await $animations.animation_finished
 	ataque = false
 	$Area2D/CollisionAtaque.disabled = true
-	
+func actualizar_hitbox():
+	var offset = abs($Area2D/CollisionAtaque.position.x)
+	if $animations.flip_h:
+		$Area2D/CollisionAtaque.position.x = -offset
+	else:
+		$Area2D/CollisionAtaque.position.x = offset
 
+func _recibir_daño(cantidad):
+	if No_esta_muerto:
+		return
+	vida_actual -= cantidad
+	print("Daño recibido:", cantidad)
+	print("Vida actual:", vida_actual)
+
+	if vida_actual <= 0:
+		morir()
+
+func morir():
+	if No_esta_muerto:
+		return
+	No_esta_muerto = true
+	velocity = Vector2.ZERO
+	queue_free()
+	
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemigo_daño"):
 		print("daño dado")
 	pass # Replace with function body.
+
+
+func _on_area_daño_area_entered(area: Area2D) -> void:
+	if No_esta_muerto:
+		return
+	if area.is_in_group("enemigo_ataque_daño"):
+		_recibir_daño(1)
+		print("Jugador recibio daño")

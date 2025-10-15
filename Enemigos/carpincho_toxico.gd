@@ -57,10 +57,10 @@ func girar():
 	$RayCast2D_wall_detection.target_position.x = abs(RAY_WALL_TARGET_POSITION_X) * direccion
 
 	# Cambiar lado del área de ataque
-	$ataque_carp_tox.position.x = abs($ataque_carp_tox.position.x) * direccion
+	$Ataque_Carp_Tox.position.x = abs($Ataque_Carp_Tox.position.x) * direccion
 
 	# Cambiar lado del CollisionShape2D dentro del área
-	$ataque_carp_tox/CollisionShape2D.position.x = abs($ataque_carp_tox/CollisionShape2D.position.x) * direccion
+	$Ataque_Carp_Tox/ataque_tox.position.x = abs($Ataque_Carp_Tox/ataque_tox.position.x) * direccion
 
 
 # --- ATAQUE ---
@@ -80,8 +80,8 @@ func _on_ataque_carp_tox_body_entered(body):
 			$AnimatedSprite2D.flip_h = true
 
 		# Ajustar ataque al nuevo lado
-		$ataque_carp_tox.position.x = abs($ataque_carp_tox.position.x) * direccion
-		$ataque_carp_tox/CollisionShape2D.position.x = abs($ataque_carp_tox/CollisionShape2D.position.x) * direccion
+		$Ataque_Carp_Tox.position.x = abs($Ataque_Carp_Tox/ataque_tox.position.x) * direccion
+		$Ataque_Carp_Tox/ataque_tox.position.x = abs($Ataque_Carp_Tox/ataque_tox.position.x) * direccion
 
 		$AnimatedSprite2D.play("Ataque_tox")
 		$AtaqueTimer.wait_time = 0.7
@@ -128,7 +128,7 @@ func morir():
 	velocity = Vector2.ZERO
 	$AnimatedSprite2D.play("Death")
 	$CollisionShape2D.set_deferred("disabled", true)
-	$ataque_carp_tox.set_deferred("monitoring", false)
+	$Ataque_Carp_Tox.set_deferred("monitoring", false)
 	await $AnimatedSprite2D.animation_finished
 	queue_free()
 

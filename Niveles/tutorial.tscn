@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://bqrsggp3nhn0o"]
+[gd_scene load_steps=5 format=4 uid="uid://bqrsggp3nhn0o"]
 
 [ext_resource type="PackedScene" uid="uid://ca3j0rb4cufgm" path="res://Jugador/jugador.tscn" id="1_dukp0"]
 [ext_resource type="PackedScene" uid="uid://y1krkuitbrd7" path="res://Assets/Escenario/Escenario_0.tscn" id="2_482rh"]
 [ext_resource type="PackedScene" uid="uid://k07pucxdk1n3" path="res://Enemigos/carpincho_toxico.tscn" id="3_qtuxd"]
+[ext_resource type="PackedScene" uid="uid://c8x6l32bu6o4q" path="res://Enemigos/blop.tscn" id="4_a2sym"]
 
 [node name="Tutorial" type="Node2D"]
 
@@ -21,3 +22,6 @@ position = Vector2(2151, 286)
 
 [node name="Carpincho_Toxico3" parent="." instance=ExtResource("3_qtuxd")]
 position = Vector2(2406, -99)
+
+[node name="Blop" parent="." instance=ExtResource("4_a2sym")]
+position = Vector2(1150, 284)

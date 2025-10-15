@@ -21,6 +21,12 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1092
 window/size/viewport_height=614
 
+[global_group]
+
+"enemigo_daño"=""
+enemigo=""
+"enemigo_ataque_daño"="daño que recibe el jugador por el ataque del enemigo"
+
 [input]
 
 ui_accept={

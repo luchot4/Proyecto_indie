@@ -473,11 +473,11 @@ position = Vector2(29.75, 1)
 shape = SubResource("RectangleShape2D_pfhhi")
 debug_color = Color(0.89189994, 0.26517087, 0.4815743, 0.41960785)
 
-[node name="Area2D2" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 0
+[node name="Area_Daño" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+[node name="CollisionDaño" type="CollisionShape2D" parent="Area_Daño"]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_p16do")
 debug_color = Color(0.3764706, 0, 0, 0.41960785)
@@ -486,3 +486,4 @@ debug_color = Color(0.3764706, 0, 0, 0.41960785)
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="area_entered" from="Area_Daño" to="." method="_on_area_daño_area_entered"]

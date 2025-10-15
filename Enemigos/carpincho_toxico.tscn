@@ -188,7 +188,7 @@ animations = [{
 size = Vector2(36, 55)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkpfx"]
-size = Vector2(66, 57)
+size = Vector2(66, 51.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiym"]
 size = Vector2(21, 58)
@@ -217,12 +217,12 @@ target_position = Vector2(0, 16)
 [node name="RayCast2D_wall_detection" type="RayCast2D" parent="."]
 target_position = Vector2(27, 0)
 
-[node name="ataque_carp_tox" type="Area2D" parent="."]
+[node name="Ataque_Carp_Tox" type="Area2D" parent="." groups=["enemigo_ataque_daño"]]
 collision_layer = 8
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ataque_carp_tox"]
-position = Vector2(14, 1)
+[node name="ataque_tox" type="CollisionShape2D" parent="Ataque_Carp_Tox"]
+position = Vector2(19, 3)
 shape = SubResource("RectangleShape2D_tkpfx")
 
 [node name="AtaqueTimer" type="Timer" parent="." groups=["enemigo"]]
@@ -231,12 +231,12 @@ shape = SubResource("RectangleShape2D_tkpfx")
 collision_layer = 8
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Daño"]
+[node name="Collision_Daño" type="CollisionShape2D" parent="Area_Daño"]
 position = Vector2(-8.5, 1)
 shape = SubResource("RectangleShape2D_yeiym")
 debug_color = Color(0.73272264, 0.3802267, 0.72343373, 0.41960785)
 
-[connection signal="body_entered" from="ataque_carp_tox" to="." method="_on_ataque_carp_tox_body_entered"]
-[connection signal="body_exited" from="ataque_carp_tox" to="." method="_on_ataque_carp_tox_body_exited"]
+[connection signal="body_entered" from="Ataque_Carp_Tox" to="." method="_on_ataque_carp_tox_body_entered"]
+[connection signal="body_exited" from="Ataque_Carp_Tox" to="." method="_on_ataque_carp_tox_body_exited"]
 [connection signal="timeout" from="AtaqueTimer" to="." method="_on_ataque_timer_timeout"]
 [connection signal="area_entered" from="Area_Daño" to="." method="_on_area_daño_area_entered"]

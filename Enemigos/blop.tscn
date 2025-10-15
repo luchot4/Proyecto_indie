@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://c8x6l32bu6o4q"]
+
+[ext_resource type="Script" uid="uid://rkvgsodwmejr" path="res://Enemigos/blop.gd" id="1_of4tj"]
+[ext_resource type="Texture2D" uid="uid://btuhhdcqto63c" path="res://Assets/Enemigos_Assets/Blop/blob.png" id="1_vkljm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_of4tj"]
+atlas = ExtResource("1_vkljm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwelg"]
+atlas = ExtResource("1_vkljm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gll2"]
+atlas = ExtResource("1_vkljm")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxt18"]
+atlas = ExtResource("1_vkljm")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8f4fp"]
+atlas = ExtResource("1_vkljm")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ee684"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_of4tj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwelg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gll2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxt18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8f4fp")
+}],
+"loop": true,
+"name": &"Iddle",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obp8e"]
+size = Vector2(18.5, 19.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d6nr2"]
+size = Vector2(71, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gj4i"]
+size = Vector2(71, 62)
+
+[node name="Blop" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_of4tj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_ee684")
+animation = &"Iddle"
+frame_progress = 0.9721813
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 16.5)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_obp8e")
+
+[node name="RayCast2D_floor_detection" type="RayCast2D" parent="."]
+position = Vector2(33, 25)
+target_position = Vector2(0, 16)
+
+[node name="RayCast2D_wall_detection" type="RayCast2D" parent="."]
+scale = Vector2(2, 2)
+target_position = Vector2(22, 0)
+
+[node name="Area_Ataque" type="Area2D" parent="." groups=["enemigo_ataque_daño"]]
+collision_layer = 8
+collision_mask = 4
+
+[node name="area_ataque" type="CollisionShape2D" parent="Area_Ataque"]
+position = Vector2(-0.5, 4)
+shape = SubResource("RectangleShape2D_d6nr2")
+debug_color = Color(0.9542586, 0.1593203, 0.37455568, 0.41960785)
+
+[node name="Area_Daño" type="Area2D" parent="." groups=["enemigo_daño"]]
+collision_layer = 8
+collision_mask = 4
+
+[node name="Collision_Daño" type="CollisionShape2D" parent="Area_Daño"]
+position = Vector2(-0.5, 4)
+shape = SubResource("RectangleShape2D_6gj4i")
+
+[connection signal="area_entered" from="Area_Daño" to="." method="_on_area_daño_area_entered"]
