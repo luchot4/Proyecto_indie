@@ -236,7 +236,10 @@ position = Vector2(-8.5, 1)
 shape = SubResource("RectangleShape2D_yeiym")
 debug_color = Color(0.73272264, 0.3802267, 0.72343373, 0.41960785)
 
+[node name="DañoTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Ataque_Carp_Tox" to="." method="_on_ataque_carp_tox_body_entered"]
 [connection signal="body_exited" from="Ataque_Carp_Tox" to="." method="_on_ataque_carp_tox_body_exited"]
 [connection signal="timeout" from="AtaqueTimer" to="." method="_on_ataque_timer_timeout"]
 [connection signal="area_entered" from="Area_Daño" to="." method="_on_area_daño_area_entered"]
+[connection signal="timeout" from="DañoTimer" to="." method="_on_daño_timer_timeout"]

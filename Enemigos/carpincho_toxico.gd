@@ -8,6 +8,7 @@ var vida_max = 2
 var vida_actual = vida_max
 var No_esta_muerto = false
 var atacando = false
+var jugador_en_area = false
 var direccion = 1 # 1 = derecha, -1 = izquierda
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -16,6 +17,11 @@ func _ready():
 	velocity.x = SPEED 
 	$RayCast2D_floor_detection.position.x = RAY_FLOOR_POSITION_X
 	$RayCast2D_wall_detection.target_position.x = RAY_WALL_TARGET_POSITION_X
+	##Contador para controlar cuando el jugador entra al area de daño
+	$DañoTimer.wait_time = 0.7
+	$DañoTimer.autostart = false
+	$DañoTimer.one_shot = false
+	
 
 
 func _physics_process(delta: float):
@@ -68,6 +74,8 @@ func _on_ataque_carp_tox_body_entered(body):
 	if No_esta_muerto:
 		return
 	if body.is_in_group("player"):
+		jugador_en_area = true
+		$DañoTimer.start()
 		atacando = true
 		velocity = Vector2.ZERO
 
@@ -84,7 +92,7 @@ func _on_ataque_carp_tox_body_entered(body):
 		$Ataque_Carp_Tox/ataque_tox.position.x = abs($Ataque_Carp_Tox/ataque_tox.position.x) * direccion
 
 		$AnimatedSprite2D.play("Ataque_tox")
-		$AtaqueTimer.wait_time = 0.7
+		$AtaqueTimer.wait_time = 0.9
 		$AtaqueTimer.start()
 
 
@@ -93,11 +101,18 @@ func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
 		return
 	if body.is_in_group("player"):
 		atacando = false
+		jugador_en_area = false
+		$DañoTimer.stop()
 		# Reanuda movimiento según dirección
 		velocity.x = SPEED * direccion
 		
 		$AtaqueTimer.stop()
 		$AnimatedSprite2D.play("Walking")
+
+func _on_daño_timer_timeout() -> void:
+	if jugador_en_area and No_esta_muerto:
+		##aplica daño al jugador
+		get_tree().call_group("player", "_recibir_daño",1)
 
 
 func _on_ataque_timer_timeout() -> void:
