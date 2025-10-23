@@ -117,7 +117,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Ataque_tox",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -188,7 +188,7 @@ animations = [{
 size = Vector2(36, 55)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkpfx"]
-size = Vector2(66, 51.5)
+size = Vector2(55, 51.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiym"]
 size = Vector2(21, 58)
@@ -222,7 +222,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="ataque_tox" type="CollisionShape2D" parent="Ataque_Carp_Tox"]
-position = Vector2(19, 3)
+position = Vector2(13.5, 3)
 shape = SubResource("RectangleShape2D_tkpfx")
 
 [node name="AtaqueTimer" type="Timer" parent="." groups=["enemigo"]]

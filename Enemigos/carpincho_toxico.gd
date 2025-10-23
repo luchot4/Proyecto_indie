@@ -75,9 +75,8 @@ func _on_ataque_carp_tox_body_entered(body):
 		return
 	if body.is_in_group("player"):
 		jugador_en_area = true
-		$DañoTimer.start()
 		atacando = true
-		velocity = Vector2.ZERO
+		velocity = Vector2.ZERO		##SE QUEDA EN EL LUGAR UNA VEZ DETECTA AL JUGADOR
 
 		# Hace que mire hacia el jugador antes de atacar
 		if body.global_position.x < global_position.x:
@@ -90,11 +89,22 @@ func _on_ataque_carp_tox_body_entered(body):
 		# Ajustar ataque al nuevo lado
 		$Ataque_Carp_Tox.position.x = abs($Ataque_Carp_Tox/ataque_tox.position.x) * direccion
 		$Ataque_Carp_Tox/ataque_tox.position.x = abs($Ataque_Carp_Tox/ataque_tox.position.x) * direccion
-
+		
 		$AnimatedSprite2D.play("Ataque_tox")
-		$AtaqueTimer.wait_time = 0.9
-		$AtaqueTimer.start()
+		atacar()		##LLAMA A LA FUNCION DE ATAUE
+		$AtaqueTimer.wait_time = 0.9		##TEMPORIZADOR PARA VOLVER A REPETIR LA ANIMACION DE ATAQUE
+		$AtaqueTimer.start()		##INICIA EL TEMPORIZADOR DEL ATAQUE
+		
 
+func atacar():		##FUNCION PARA CONTROLAR EL ATAQUE DESPUES QUE TERMINO LA ANIMACION
+	atacando = true
+	$AnimatedSprite2D.play("Ataque_tox")	##INICA LA ANIMACION DE ATAQUE
+	await $AnimatedSprite2D.animation_finished  # ⏳ Espera a que termine la animación
+	if jugador_en_area and not No_esta_muerto:		##SI EL JUGADOR ESTA EN AREA Y SIGUE VIVO ENTONCES RECIBE DAÑOO
+		get_tree().call_group("player", "_recibir_daño", 1)		##LLAMA A RECIBIR DAÑO Y EL JUGADOR RECIBE UN PUNTO DE DAÑOP
+		print("Daño aplicado al jugador")
+	atacando = false		
+	$AnimatedSprite2D.play("Walking")
 
 func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
 	if No_esta_muerto:
@@ -102,18 +112,10 @@ func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		atacando = false
 		jugador_en_area = false
-		$DañoTimer.stop()
 		# Reanuda movimiento según dirección
 		velocity.x = SPEED * direccion
-		
 		$AtaqueTimer.stop()
 		$AnimatedSprite2D.play("Walking")
-
-func _on_daño_timer_timeout() -> void:
-	if jugador_en_area and No_esta_muerto:
-		##aplica daño al jugador
-		get_tree().call_group("player", "_recibir_daño",1)
-
 
 func _on_ataque_timer_timeout() -> void:
 	if No_esta_muerto:

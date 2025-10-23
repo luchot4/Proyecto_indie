@@ -9,12 +9,17 @@ var had_jump:bool = false
 var vida_max = 3
 var vida_actual = vida_max
 var No_esta_muerto = false
-
+var puede_recibir_daño = true 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	$Area2D/CollisionAtaque.disabled = true
 	$animations.play("Appear")
+	##TEMPORIZADOR PARA EL COOLDOWN DE DAÑO QUE RECIBE EL JUGADOR
+	$CoolDownTimer.wait_time = 1.0 ## TIEMPO DE VULNERABILIDAD
+	$CoolDownTimer.one_shot = true
+	$CoolDownTimer.autostart = false
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ataque"):
@@ -87,6 +92,7 @@ func _on_animations_animation_finished() -> void:
 		
 func _on_coyote_timer_timeout() -> void:
 	print("Lol")
+
 func Animated():	#Para la animacion de Atacar
 	if !ataque:
 		if velocity.x < 0 :
@@ -120,9 +126,12 @@ func actualizar_hitbox():
 		$Area2D/CollisionAtaque.position.x = offset
 
 func _recibir_daño(cantidad):
-	if No_esta_muerto:
+	if No_esta_muerto and not puede_recibir_daño:
 		return
 	vida_actual -= cantidad
+	puede_recibir_daño = false
+	$CoolDownTimer.start()
+	
 	print("Daño recibido:", cantidad)
 	print("Vida actual:", vida_actual)
 
@@ -141,10 +150,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		print("daño dado")
 	pass # Replace with function body.
 
+ 
 
-func _on_area_daño_area_entered(area: Area2D) -> void:
-	if No_esta_muerto:
-		return
-	if area.is_in_group("enemigo_ataque_daño"):
-		_recibir_daño(1)
-		print("Jugador recibio daño")
+
+func _on_cool_down_timer_timeout() -> void:
+	puede_recibir_daño = true
