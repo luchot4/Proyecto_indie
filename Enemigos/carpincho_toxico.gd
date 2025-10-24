@@ -9,6 +9,7 @@ var vida_actual = vida_max
 var No_esta_muerto = false
 var atacando = false
 var jugador_en_area = false
+var objetivo_jugador = null  ## SE UTILIZA CUANDO EL JUGADOR ENTRA AL AREA Y PARA EL KNOCKBACK
 var direccion = 1 # 1 = derecha, -1 = izquierda
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -22,12 +23,9 @@ func _ready():
 	$DañoTimer.autostart = false
 	$DañoTimer.one_shot = false
 	
-
-
 func _physics_process(delta: float):
 	if No_esta_muerto:
 		return
-
 	# Gravedad
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -74,10 +72,10 @@ func _on_ataque_carp_tox_body_entered(body):
 	if No_esta_muerto:
 		return
 	if body.is_in_group("player"):
+		objetivo_jugador = body
 		jugador_en_area = true
 		atacando = true
 		velocity = Vector2.ZERO		##SE QUEDA EN EL LUGAR UNA VEZ DETECTA AL JUGADOR
-
 		# Hace que mire hacia el jugador antes de atacar
 		if body.global_position.x < global_position.x:
 			direccion = -1
@@ -100,10 +98,16 @@ func atacar():		##FUNCION PARA CONTROLAR EL ATAQUE DESPUES QUE TERMINO LA ANIMAC
 	atacando = true
 	$AnimatedSprite2D.play("Ataque_tox")	##INICA LA ANIMACION DE ATAQUE
 	await $AnimatedSprite2D.animation_finished  # ⏳ Espera a que termine la animación
-	if jugador_en_area and not No_esta_muerto:		##SI EL JUGADOR ESTA EN AREA Y SIGUE VIVO ENTONCES RECIBE DAÑOO
-		get_tree().call_group("player", "_recibir_daño", 1)		##LLAMA A RECIBIR DAÑO Y EL JUGADOR RECIBE UN PUNTO DE DAÑOP
-		print("Daño aplicado al jugador")
-	atacando = false		
+	if jugador_en_area and not No_esta_muerto and objetivo_jugador:		##SI EL JUGADOR ESTA EN AREA Y SIGUE VIVO ENTONCES RECIBE DAÑOO
+		if objetivo_jugador.puede_recibir_daño:
+			objetivo_jugador._recibir_daño(1)
+		##get_tree().call_group("player", "_recibir_daño", 1)		##LLAMA A RECIBIR DAÑO Y EL JUGADOR RECIBE UN PUNTO DE DAÑOP
+		var direccion_x = sign(objetivo_jugador.global_position.x - global_position.x)
+		if direccion_x == 0:
+			direccion_x = 1
+		var knockback_direccion = Vector2(direccion_x, -0.3).normalized()
+		objetivo_jugador.aplicar_knockback(knockback_direccion, 250.0, 0.2)
+	atacando = false	
 	$AnimatedSprite2D.play("Walking")
 
 func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
@@ -112,6 +116,7 @@ func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		atacando = false
 		jugador_en_area = false
+		objetivo_jugador = null
 		# Reanuda movimiento según dirección
 		velocity.x = SPEED * direccion
 		$AtaqueTimer.stop()

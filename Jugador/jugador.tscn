@@ -431,7 +431,7 @@ size = Vector2(16, 27)
 size = Vector2(44.5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p16do"]
-size = Vector2(13, 24)
+size = Vector2(16, 26.5)
 
 [node name="Jugador" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(2, 2)
@@ -478,12 +478,15 @@ collision_layer = 4
 collision_mask = 8
 
 [node name="CollisionDaño" type="CollisionShape2D" parent="Area_Daño"]
-position = Vector2(0, 2)
+position = Vector2(-1, 1.75)
 shape = SubResource("RectangleShape2D_p16do")
 debug_color = Color(0.3764706, 0, 0, 0.41960785)
 
 [node name="CoolDownTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ParpadeoTimer" type="Timer" parent="."]
+wait_time = 0.1
 
 [connection signal="animation_finished" from="animations" to="." method="_on_animations_animation_finished"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
@@ -491,3 +494,4 @@ one_shot = true
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="area_entered" from="Area_Daño" to="." method="_on_area_daño_area_entered"]
 [connection signal="timeout" from="CoolDownTimer" to="." method="_on_cool_down_timer_timeout"]
+[connection signal="timeout" from="ParpadeoTimer" to="." method="_on_parpadeo_timer_timeout"]

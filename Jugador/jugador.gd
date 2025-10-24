@@ -10,15 +10,23 @@ var vida_max = 3
 var vida_actual = vida_max
 var No_esta_muerto = false
 var puede_recibir_daño = true 
+##KNOCKBACK VARIABLES
+var knockback : Vector2 = Vector2.ZERO
+var knockback_timer : float = 0.0
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	$Area2D/CollisionAtaque.disabled = true
 	$animations.play("Appear")
 	##TEMPORIZADOR PARA EL COOLDOWN DE DAÑO QUE RECIBE EL JUGADOR
-	$CoolDownTimer.wait_time = 1.0 ## TIEMPO DE VULNERABILIDAD
+	$CoolDownTimer.wait_time = 3.0 ## TIEMPO DE INVULNERABILIDAD
 	$CoolDownTimer.one_shot = true
 	$CoolDownTimer.autostart = false
+	##TEMPORIZADOR PARA EL PARPADEO DURANTE EL DAÑO
+	$ParpadeoTimer.wait_time = 0.2
+	$ParpadeoTimer.one_shot = false
+	$ParpadeoTimer.autostart = false
 
 
 func _process(_delta: float) -> void:
@@ -29,28 +37,31 @@ func _process(_delta: float) -> void:
 	pass
 func _physics_process(delta: float):
 	Animated()
-	##Add the gravity
-	if is_on_floor():
-		leaved_floor = false
-		had_jump = false
-	
-	if not is_on_floor():
-		if not leaved_floor:	
-			$CoyoteTimer.start()
-			leaved_floor=true
-		velocity.y += gravity * delta
-	
-	#Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and right_to_jump():
-		velocity.y = JUMP_VELOCITY
-	
-	# Get the input direction and handle the movement/deceleration
-	#As good practice, you should replace UI actions with custom gameplay actions
-	var direction = Input.get_axis("ui_left","ui_right")
-	if direction:
-		velocity.x = direction * SPEED
+	if knockback_timer > 0.0:
+		velocity = knockback
+		knockback_timer -= delta
+		if knockback_timer <= 0.0:
+			knockback = Vector2.ZERO
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		##Add the gravity
+		if is_on_floor():
+			leaved_floor = false
+			had_jump = false
+		if not is_on_floor():
+			if not leaved_floor:	
+				$CoyoteTimer.start()
+				leaved_floor=true
+			velocity.y += gravity * delta
+		#Handle Jump.
+		if Input.is_action_just_pressed("ui_accept") and right_to_jump():
+			velocity.y = JUMP_VELOCITY
+		# Get the input direction and handle the movement/deceleration
+		#As good practice, you should replace UI actions with custom gameplay actions
+		var direction = Input.get_axis("ui_left","ui_right")
+		if direction:
+			velocity.x = direction * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
 		
 	move_and_slide()
 	decide_animation()
@@ -126,11 +137,14 @@ func actualizar_hitbox():
 		$Area2D/CollisionAtaque.position.x = offset
 
 func _recibir_daño(cantidad):
-	if No_esta_muerto and not puede_recibir_daño:
+	if No_esta_muerto or not puede_recibir_daño:
 		return
 	vida_actual -= cantidad
 	puede_recibir_daño = false
 	$CoolDownTimer.start()
+	$ParpadeoTimer.start()
+	##PARA QUE SEA INVULNERABLE DURANTE EL COOLDOWN
+	collision_mask &= ~8 	##SACA LA MASCARA 4
 	
 	print("Daño recibido:", cantidad)
 	print("Vida actual:", vida_actual)
@@ -145,13 +159,21 @@ func morir():
 	velocity = Vector2.ZERO
 	queue_free()
 	
-func _on_area_2d_area_entered(area: Area2D) -> void:
+func _on_area_2d_area_entered(area: Area2D) -> void:  ##FUNCION QUE HACIA QUE EL JUGADOR RECIBA DAÑO, POR AHORA BLOQUEADOO
 	if area.is_in_group("enemigo_daño"):
 		print("daño dado")
 	pass # Replace with function body.
 
  
-
-
 func _on_cool_down_timer_timeout() -> void:
 	puede_recibir_daño = true
+	collision_mask |= 8 
+	$ParpadeoTimer.stop()
+	$animations.visible = true
+
+func aplicar_knockback(direccion: Vector2, force: float, knockback_duracion: float) -> void:
+	knockback = direccion * force
+	knockback_timer = knockback_duracion
+
+func _on_parpadeo_timer_timeout() -> void:
+	$animations.visible = not $animations.visible
