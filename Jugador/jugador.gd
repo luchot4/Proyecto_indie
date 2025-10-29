@@ -6,6 +6,7 @@ var appeared:bool = false
 var leaved_floor:bool = false
 var had_jump:bool = false
 @export var ataque: bool = false
+var tomar : bool = false
 var vida_max = 3
 var vida_actual = vida_max
 var No_esta_muerto = false
@@ -34,6 +35,8 @@ func _process(_delta: float) -> void:
 		atacar_x()
 	if ataque:
 		actualizar_hitbox()
+	if Input.is_action_just_pressed("tomar_mate"):
+		tomar_mate()
 	pass
 func _physics_process(delta: float):
 	Animated()
@@ -42,6 +45,11 @@ func _physics_process(delta: float):
 		knockback_timer -= delta
 		if knockback_timer <= 0.0:
 			knockback = Vector2.ZERO
+	elif tomar:		##PARA QUE CUANDO ESTE EN EL AIRE Y SE PRESIONE PARA TOMAR MATE, NO QUEDE CONGELADO EN EL AIRE
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.y += gravity * delta
+		move_and_slide()
+		return
 	else:
 		##Add the gravity
 		if is_on_floor():
@@ -105,6 +113,8 @@ func _on_coyote_timer_timeout() -> void:
 	print("Lol")
 
 func Animated():	#Para la animacion de Atacar
+	if tomar:
+		return		##PARA NO SOBREESCRIBIR LA ANIMACION MIENTRAS TOMA MATE
 	if !ataque:
 		if velocity.x < 0 :
 			$animations.flip_h = true
@@ -136,7 +146,15 @@ func actualizar_hitbox():
 	else:
 		$Area2D/CollisionAtaque.position.x = offset
 
-func _recibir_daño(cantidad):
+func tomar_mate():		##FUNCION PARA TOMAR MATE
+	tomar = true
+	var orientacion_actual = $animations.flip_h
+	$animations.play("Tomar_mate")
+	$animations.flip_h = orientacion_actual
+	await $animations.animation_finished
+	tomar = false
+
+func _recibir_daño(cantidad):		##FUNCION PARA QUE EL JUGADOR RECIBA DAÑO DEPENDIENDO DE LA CANTIDAD ASIGNADA
 	if No_esta_muerto or not puede_recibir_daño:
 		return
 	vida_actual -= cantidad
