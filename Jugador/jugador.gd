@@ -1,10 +1,13 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -450.0
 var appeared:bool = false
 var leaved_floor:bool = false
 var had_jump:bool = false
+##DOBLE SALTO
+var max_jumps : int = 2
+var cont_jumps : int = 0
 @export var ataque: bool = false
 var tomar : bool = false
 var vida_max = 3
@@ -14,12 +17,17 @@ var puede_recibir_daño = true
 ##KNOCKBACK VARIABLES
 var knockback : Vector2 = Vector2.ZERO
 var knockback_timer : float = 0.0
+##PEGARSE A LA PARED
+var ray_cast_dimension = 9.5
+
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	$Area2D/CollisionAtaque.disabled = true
 	$animations.play("Appear")
+	##PARA PEGARSE A LA PARED
+	$RayCast2D_WallJump.target_position.x = ray_cast_dimension
 	##TEMPORIZADOR PARA EL COOLDOWN DE DAÑO QUE RECIBE EL JUGADOR
 	$CoolDownTimer.wait_time = 3.0 ## TIEMPO DE INVULNERABILIDAD
 	$CoolDownTimer.one_shot = true
@@ -28,6 +36,7 @@ func _ready():
 	$ParpadeoTimer.wait_time = 0.2
 	$ParpadeoTimer.one_shot = false
 	$ParpadeoTimer.autostart = false
+	
 
 
 func _process(_delta: float) -> void:
@@ -62,6 +71,7 @@ func _physics_process(delta: float):
 			velocity.y += gravity * delta
 		#Handle Jump.
 		if Input.is_action_just_pressed("ui_accept") and right_to_jump():
+			cont_jumps += 1
 			velocity.y = JUMP_VELOCITY
 		# Get the input direction and handle the movement/deceleration
 		#As good practice, you should replace UI actions with custom gameplay actions
@@ -73,6 +83,7 @@ func _physics_process(delta: float):
 		
 	move_and_slide()
 	decide_animation()
+	print($RayCast2D_WallJump.is_colliding())
 	
 func decide_animation():
 	#appear
@@ -83,10 +94,12 @@ func decide_animation():
 		$animations.play("Iddle")
 	elif velocity.x < 0:
 		#left
+		$RayCast2D_WallJump.target_position.x = -ray_cast_dimension
 		$animations.flip_h = true
 		$animations.play("Run")
 	elif velocity.x > 0:
 		#right
+		$RayCast2D_WallJump.target_position.x = ray_cast_dimension
 		$animations.flip_h = false
 		$animations.play("Run")
 		
@@ -97,8 +110,11 @@ func decide_animation():
 		$animations.play("Jump_up")
 
 func right_to_jump():
-	if had_jump: return false
+	if had_jump: 
+		if cont_jumps < max_jumps : return true 
+		else : return false
 	if is_on_floor(): 
+		cont_jumps = 0
 		had_jump = true
 		return true
 	elif not $CoyoteTimer.is_stopped(): 
