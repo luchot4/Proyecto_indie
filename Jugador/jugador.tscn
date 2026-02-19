@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://ca3j0rb4cufgm"]
+[gd_scene format=3 uid="uid://ca3j0rb4cufgm"]
 
 [ext_resource type="Texture2D" uid="uid://gn3cqxu15ag2" path="res://Assets/Jugador_Assets/Mask Dude/Appearing (96x96).png" id="1_d8bf7"]
 [ext_resource type="Script" uid="uid://b70dmlofw627a" path="res://Jugador/jugador.gd" id="1_pfhhi"]
@@ -495,62 +495,62 @@ size = Vector2(44.5, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p16do"]
 size = Vector2(16, 26.5)
 
-[node name="Jugador" type="CharacterBody2D" groups=["player"]]
+[node name="Jugador" type="CharacterBody2D" unique_id=27214068 groups=["player"]]
 scale = Vector2(2, 2)
 collision_layer = 4
 collision_mask = 9
 script = ExtResource("1_pfhhi")
 
-[node name="ATAQUE" type="AnimatedSprite2D" parent="."]
+[node name="ATAQUE" type="AnimatedSprite2D" parent="." unique_id=675992555]
 visible = false
 position = Vector2(-0.5, -1.5)
 sprite_frames = SubResource("SpriteFrames_sh60x")
 animation = &"atack"
 
-[node name="animations" type="AnimatedSprite2D" parent="."]
+[node name="animations" type="AnimatedSprite2D" parent="." unique_id=1763858101]
 position = Vector2(-0.5, 1)
 sprite_frames = SubResource("SpriteFrames_ws1bt")
 animation = &"Tomar_mate"
 frame = 7
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=999540303]
 position = Vector2(-1, 1.5)
 shape = SubResource("RectangleShape2D_d8bf7")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=671487934]
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
-[node name="CoyoteTimer" type="Timer" parent="."]
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=1460597828]
 wait_time = 0.1
 one_shot = true
 
-[node name="Area2D" type="Area2D" parent="." groups=["golpe", "player"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=1142206897 groups=["golpe", "player"]]
 collision_layer = 4
 collision_mask = 8
 
-[node name="CollisionAtaque" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionAtaque" type="CollisionShape2D" parent="Area2D" unique_id=2055311131]
 position = Vector2(29.75, 1)
 shape = SubResource("RectangleShape2D_pfhhi")
 debug_color = Color(0.89189994, 0.26517087, 0.4815743, 0.41960785)
 
-[node name="Area_Daño" type="Area2D" parent="." groups=["player"]]
+[node name="Area_Daño" type="Area2D" parent="." unique_id=1315357402 groups=["player"]]
 collision_layer = 4
 collision_mask = 8
 
-[node name="CollisionDaño" type="CollisionShape2D" parent="Area_Daño"]
+[node name="CollisionDaño" type="CollisionShape2D" parent="Area_Daño" unique_id=1230686000]
 position = Vector2(-1, 1.75)
 shape = SubResource("RectangleShape2D_p16do")
 debug_color = Color(0.3764706, 0, 0, 0.41960785)
 
-[node name="CoolDownTimer" type="Timer" parent="."]
+[node name="CoolDownTimer" type="Timer" parent="." unique_id=493566303]
 one_shot = true
 
-[node name="ParpadeoTimer" type="Timer" parent="."]
+[node name="ParpadeoTimer" type="Timer" parent="." unique_id=1868012316]
 wait_time = 0.1
 
-[node name="RayCast2D_WallJump" type="RayCast2D" parent="."]
+[node name="RayCast2D_WallJump" type="RayCast2D" parent="." unique_id=2120529735]
 target_position = Vector2(9.5, 0)
 
 [connection signal="animation_finished" from="animations" to="." method="_on_animations_animation_finished"]

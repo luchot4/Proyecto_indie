@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://k07pucxdk1n3"]
+[gd_scene format=3 uid="uid://k07pucxdk1n3"]
 
 [ext_resource type="Script" uid="uid://b46k3y2207pkb" path="res://Enemigos/carpincho_toxico.gd" id="2_ge1t4"]
 [ext_resource type="Texture2D" uid="uid://dvkea5wxloxhk" path="res://Assets/Enemigos_Assets/Carpincho_Toxico/Carpincho_toxico_attck2.png" id="2_yeiym"]
@@ -193,50 +193,48 @@ size = Vector2(55, 51.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiym"]
 size = Vector2(21, 58)
 
-[node name="Carpincho_Toxico" type="CharacterBody2D"]
+[node name="Carpincho_Toxico" type="CharacterBody2D" unique_id=1281633654]
 collision_layer = 8
 script = ExtResource("2_ge1t4")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=363365573]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_7kmn5")
-animation = &"Ataque_tox"
-frame = 4
-frame_progress = 1.0
+animation = &"Walking"
 flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1200490424]
 visible = false
 position = Vector2(2, 0.5)
 shape = SubResource("RectangleShape2D_ge1t4")
 
-[node name="RayCast2D_floor_detection" type="RayCast2D" parent="."]
+[node name="RayCast2D_floor_detection" type="RayCast2D" parent="." unique_id=1260384947]
 position = Vector2(23, 16)
 target_position = Vector2(0, 16)
 
-[node name="RayCast2D_wall_detection" type="RayCast2D" parent="."]
+[node name="RayCast2D_wall_detection" type="RayCast2D" parent="." unique_id=1606494796]
 target_position = Vector2(27, 0)
 
-[node name="Ataque_Carp_Tox" type="Area2D" parent="." groups=["enemigo_ataque_daño"]]
+[node name="Ataque_Carp_Tox" type="Area2D" parent="." unique_id=1115565318 groups=["enemigo_ataque_daño"]]
 collision_layer = 8
 collision_mask = 4
 
-[node name="ataque_tox" type="CollisionShape2D" parent="Ataque_Carp_Tox"]
+[node name="ataque_tox" type="CollisionShape2D" parent="Ataque_Carp_Tox" unique_id=666945655]
 position = Vector2(13.5, 3)
 shape = SubResource("RectangleShape2D_tkpfx")
 
-[node name="AtaqueTimer" type="Timer" parent="." groups=["enemigo"]]
+[node name="AtaqueTimer" type="Timer" parent="." unique_id=1560793641 groups=["enemigo"]]
 
-[node name="Area_Daño" type="Area2D" parent="." groups=["enemigo_daño"]]
+[node name="Area_Daño" type="Area2D" parent="." unique_id=1090550172 groups=["enemigo_daño"]]
 collision_layer = 8
 collision_mask = 4
 
-[node name="Collision_Daño" type="CollisionShape2D" parent="Area_Daño"]
+[node name="Collision_Daño" type="CollisionShape2D" parent="Area_Daño" unique_id=252920973]
 position = Vector2(-8.5, 1)
 shape = SubResource("RectangleShape2D_yeiym")
 debug_color = Color(0.73272264, 0.3802267, 0.72343373, 0.41960785)
 
-[node name="DañoTimer" type="Timer" parent="."]
+[node name="DañoTimer" type="Timer" parent="." unique_id=233897771]
 
 [connection signal="body_entered" from="Ataque_Carp_Tox" to="." method="_on_ataque_carp_tox_body_entered"]
 [connection signal="body_exited" from="Ataque_Carp_Tox" to="." method="_on_ataque_carp_tox_body_exited"]

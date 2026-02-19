@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
+const SPEED_RUN = 1.2
 const JUMP_VELOCITY = -450.0
 var appeared:bool = false
 var leaved_floor:bool = false
@@ -19,6 +20,8 @@ var knockback : Vector2 = Vector2.ZERO
 var knockback_timer : float = 0.0
 ##PEGARSE A LA PARED
 var ray_cast_dimension = 9.5
+var ver_lado_izquierdo : bool = false
+
 
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -27,7 +30,7 @@ func _ready():
 	$Area2D/CollisionAtaque.disabled = true
 	$animations.play("Appear")
 	##PARA PEGARSE A LA PARED
-	$RayCast2D_WallJump.target_position.x = ray_cast_dimension
+	
 	##TEMPORIZADOR PARA EL COOLDOWN DE DAÑO QUE RECIBE EL JUGADOR
 	$CoolDownTimer.wait_time = 3.0 ## TIEMPO DE INVULNERABILIDAD
 	$CoolDownTimer.one_shot = true
@@ -49,6 +52,8 @@ func _process(_delta: float) -> void:
 	pass
 func _physics_process(delta: float):
 	Animated()
+	var velocidad_constante = SPEED_RUN
+	var direction = Input.get_axis("ui_left","ui_right")
 	if knockback_timer > 0.0:
 		velocity = knockback
 		knockback_timer -= delta
@@ -75,16 +80,26 @@ func _physics_process(delta: float):
 			velocity.y = JUMP_VELOCITY
 		# Get the input direction and handle the movement/deceleration
 		#As good practice, you should replace UI actions with custom gameplay actions
-		var direction = Input.get_axis("ui_left","ui_right")
 		if direction:
 			velocity.x = direction * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
-		
+		if Input.is_action_pressed("correr"):
+			velocidad_constante*=SPEED_RUN
+		if direction != 0:
+			ver_lado_izquierdo = direction < 0
+			velocity.x *= velocidad_constante
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+		actualizar_Pared_Raycast()
+
+	pegarse_y_saltar_pared(delta)
 	move_and_slide()
 	decide_animation()
-	print($RayCast2D_WallJump.is_colliding())
 	
+	
+func actualizar_Pared_Raycast():
+	$RayCast2D_WallJump.target_position = Vector2(-ray_cast_dimension if ver_lado_izquierdo else ray_cast_dimension, 0)
 func decide_animation():
 	#appear
 	if not appeared: return
@@ -94,12 +109,12 @@ func decide_animation():
 		$animations.play("Iddle")
 	elif velocity.x < 0:
 		#left
-		$RayCast2D_WallJump.target_position.x = -ray_cast_dimension
+		
 		$animations.flip_h = true
 		$animations.play("Run")
 	elif velocity.x > 0:
 		#right
-		$RayCast2D_WallJump.target_position.x = ray_cast_dimension
+		
 		$animations.flip_h = false
 		$animations.play("Run")
 		
@@ -211,3 +226,21 @@ func aplicar_knockback(direccion: Vector2, force: float, knockback_duracion: flo
 
 func _on_parpadeo_timer_timeout() -> void:
 	$animations.visible = not $animations.visible
+
+##FUNCION PARA PODER PEGARSE Y SALTAR DE LA PARED
+func pegarse_y_saltar_pared(delta):
+	##Si el raycast detecta la pared y salta
+	if $RayCast2D_WallJump.is_colliding() and not is_on_floor():
+		##PEGARSE A LA PARED
+		velocity.x = 0
+		velocity.y = move_toward(velocity.y, 50, 600 * delta) ##amortiguar caida
+		cont_jumps = 1
+		
+		##SALTO DE PARED
+		if Input.is_action_just_pressed("ui_accept"):
+			velocity.y =JUMP_VELOCITY
+			#Empuje horizontal para separarse de la pared 
+			if ver_lado_izquierdo:
+				velocity.x = SPEED
+			else:
+				velocity.x = -SPEED

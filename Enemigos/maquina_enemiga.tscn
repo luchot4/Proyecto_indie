@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://02v3i4pw33uy"]
+
+[ext_resource type="Texture2D" uid="uid://6crf5xqh4o04" path="res://Assets/Enemigos_Assets/Maquina_enemiga/Maquina_Enemiga.png" id="1_517en"]
+[ext_resource type="Script" uid="uid://vhyar3ypx1m7" path="res://Enemigos/maquina_enemiga.gd" id="1_hvcdj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvcdj"]
+size = Vector2(146, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldeih"]
+size = Vector2(158, 141)
+
+[node name="Maquina_enemiga" type="CharacterBody2D" unique_id=1717321877]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_hvcdj")
+
+[node name="MaquinaEnemiga" type="Sprite2D" parent="." unique_id=1651411081]
+scale = Vector2(5.40625, 5.015625)
+texture = ExtResource("1_517en")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=549101122]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_hvcdj")
+
+[node name="Area_Daño" type="Area2D" parent="." unique_id=1978806027]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area_Daño" unique_id=1897183387]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_ldeih")
+debug_color = Color(0.7088256, 0.38543418, 0.7681675, 0.41960785)
+
+[connection signal="area_entered" from="Area_Daño" to="." method="_on_area_daño_area_entered"]
