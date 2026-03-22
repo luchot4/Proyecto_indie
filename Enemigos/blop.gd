@@ -6,7 +6,7 @@ const RAY_WALL_TARGET_POSITION_X = 18
 
 var vida_max = 3
 var vida_actual = vida_max
-var No_esta_muerto = false
+var esta_muerto = false
 var atacando = false
 var jugador_en_area = false
 var objetivo_jugador = null
@@ -21,7 +21,7 @@ func _ready():
 
 
 func _physics_process(delta: float):
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	# Gravedad
 	if not is_on_floor():
@@ -48,7 +48,7 @@ func girar():
 
 # --- DAÑO Y MUERTE ---
 func _recibir_daño(cantidad):
-	if No_esta_muerto:
+	if esta_muerto:
 		return 
 	vida_actual -= cantidad
 	print("Daño recibido:", cantidad)
@@ -58,10 +58,10 @@ func _recibir_daño(cantidad):
 		morir()
 
 func morir():
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	
-	No_esta_muerto = true
+	esta_muerto = true
 	atacando = false
 	velocity = Vector2.ZERO
 	$AnimatedSprite2D.play("Death")
@@ -72,7 +72,7 @@ func morir():
 
 # --- DETECCIÓN DE GOLPES ---
 func _on_area_daño_area_entered(area: Area2D) -> void:
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	if area.is_in_group("golpe"):
 		_recibir_daño(1)
@@ -80,13 +80,13 @@ func _on_area_daño_area_entered(area: Area2D) -> void:
 
 
 func _on_area_ataque_body_entered(body: Node2D) -> void:
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	if body.is_in_group("player"):
 		objetivo_jugador = body
 		jugador_en_area = true
 		atacando = true
-		if jugador_en_area and not No_esta_muerto and objetivo_jugador:
+		if jugador_en_area and not esta_muerto and objetivo_jugador:
 			if objetivo_jugador.puede_recibir_daño:
 				objetivo_jugador._recibir_daño(1)
 			var direccion_x = sign(objetivo_jugador.global_position.x - global_position.x)
@@ -96,7 +96,7 @@ func _on_area_ataque_body_entered(body: Node2D) -> void:
 			objetivo_jugador.aplicar_knockback(knockback_direccion, 250.0, 0.2)
 			
 func _on_area_ataque_body_exited(body: Node2D) -> void:
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	if body.is_in_group("player"):
 		atacando = false

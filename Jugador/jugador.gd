@@ -13,7 +13,7 @@ var cont_jumps : int = 0
 var tomar : bool = false
 var vida_max = 3
 var vida_actual = vida_max
-var No_esta_muerto = false
+var esta_muerto = false
 var puede_recibir_daño = true 
 ##KNOCKBACK VARIABLES
 var knockback : Vector2 = Vector2.ZERO
@@ -21,8 +21,6 @@ var knockback_timer : float = 0.0
 ##PEGARSE A LA PARED
 var ray_cast_dimension = 9.5
 var ver_lado_izquierdo : bool = false
-
-
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -114,10 +112,8 @@ func decide_animation():
 		$animations.play("Run")
 	elif velocity.x > 0:
 		#right
-		
 		$animations.flip_h = false
 		$animations.play("Run")
-		
 	# Y Axis
 	if velocity.y > 0:
 		$animations.play("Fall")
@@ -186,7 +182,7 @@ func tomar_mate():		##FUNCION PARA TOMAR MATE
 	tomar = false
 
 func _recibir_daño(cantidad):		##FUNCION PARA QUE EL JUGADOR RECIBA DAÑO DEPENDIENDO DE LA CANTIDAD ASIGNADA
-	if No_esta_muerto or not puede_recibir_daño:
+	if esta_muerto or not puede_recibir_daño:
 		return
 	vida_actual -= cantidad
 	puede_recibir_daño = false
@@ -202,9 +198,9 @@ func _recibir_daño(cantidad):		##FUNCION PARA QUE EL JUGADOR RECIBA DAÑO DEPEN
 		morir()
 
 func morir():
-	if No_esta_muerto:
+	if esta_muerto:
 		return
-	No_esta_muerto = true
+	esta_muerto = true
 	velocity = Vector2.ZERO
 	queue_free()
 	
@@ -230,17 +226,18 @@ func _on_parpadeo_timer_timeout() -> void:
 ##FUNCION PARA PODER PEGARSE Y SALTAR DE LA PARED
 func pegarse_y_saltar_pared(delta):
 	##Si el raycast detecta la pared y salta
-	if $RayCast2D_WallJump.is_colliding() and not is_on_floor():
-		##PEGARSE A LA PARED
-		velocity.x = 0
-		velocity.y = move_toward(velocity.y, 50, 600 * delta) ##amortiguar caida
-		cont_jumps = 1
+	if $RayCast2D_WallJump.get_collider():
+		if $RayCast2D_WallJump.get_collider().is_in_group("salto pared") :
+			##PEGARSE A LA PARED
+			cont_jumps = 0
+			velocity.y = 0
+			##velocity.y = move_toward(velocity.y, 80, 600 * delta) ##amortiguar caida
 		
-		##SALTO DE PARED
-		if Input.is_action_just_pressed("ui_accept"):
-			velocity.y =JUMP_VELOCITY
-			#Empuje horizontal para separarse de la pared 
-			if ver_lado_izquierdo:
-				velocity.x = SPEED
-			else:
-				velocity.x = -SPEED
+			##SALTO DE PARED
+			if Input.is_action_just_pressed("ui_accept"):
+				velocity.y =JUMP_VELOCITY
+				#Empuje horizontal para separarse de la pared 
+				if ver_lado_izquierdo:
+					velocity.x = SPEED * 2
+				else:
+					velocity.x = -SPEED * 2

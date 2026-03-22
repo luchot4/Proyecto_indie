@@ -6,7 +6,7 @@ const RAY_WALL_TARGET_POSITION_X = 27
 
 var vida_max = 2
 var vida_actual = vida_max
-var No_esta_muerto = false
+var esta_muerto = false
 var atacando = false
 var jugador_en_area = false
 var objetivo_jugador = null  ## SE UTILIZA CUANDO EL JUGADOR ENTRA AL AREA Y PARA EL KNOCKBACK
@@ -24,7 +24,7 @@ func _ready():
 	$DañoTimer.one_shot = false
 	
 func _physics_process(delta: float):
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	# Gravedad
 	if not is_on_floor():
@@ -39,7 +39,7 @@ func _physics_process(delta: float):
 		girar()
 
 	# 👉 Solo actualizar flip si NO está atacando ni muerto
-	if not atacando and not No_esta_muerto:
+	if not atacando and not esta_muerto:
 		if velocity.x < 0:
 			$AnimatedSprite2D.flip_h = false
 		elif velocity.x > 0:
@@ -69,7 +69,7 @@ func girar():
 
 # --- ATAQUE ---
 func _on_ataque_carp_tox_body_entered(body):
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	if body.is_in_group("player"):
 		objetivo_jugador = body
@@ -98,7 +98,7 @@ func atacar():		##FUNCION PARA CONTROLAR EL ATAQUE DESPUES QUE TERMINO LA ANIMAC
 	atacando = true
 	$AnimatedSprite2D.play("Ataque_tox")	##INICA LA ANIMACION DE ATAQUE
 	await $AnimatedSprite2D.animation_finished  # ⏳ Espera a que termine la animación
-	if jugador_en_area and not No_esta_muerto and objetivo_jugador:		##SI EL JUGADOR ESTA EN AREA Y SIGUE VIVO ENTONCES RECIBE DAÑOO
+	if jugador_en_area and not esta_muerto and objetivo_jugador:		##SI EL JUGADOR ESTA EN AREA Y SIGUE VIVO ENTONCES RECIBE DAÑOO
 		if objetivo_jugador.puede_recibir_daño:
 			objetivo_jugador._recibir_daño(1)
 		##get_tree().call_group("player", "_recibir_daño", 1)		##LLAMA A RECIBIR DAÑO Y EL JUGADOR RECIBE UN PUNTO DE DAÑOP
@@ -111,7 +111,7 @@ func atacar():		##FUNCION PARA CONTROLAR EL ATAQUE DESPUES QUE TERMINO LA ANIMAC
 	$AnimatedSprite2D.play("Walking")
 
 func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	if body.is_in_group("player"):
 		atacando = false
@@ -123,14 +123,14 @@ func _on_ataque_carp_tox_body_exited(body: Node2D) -> void:
 		$AnimatedSprite2D.play("Walking")
 
 func _on_ataque_timer_timeout() -> void:
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	$AnimatedSprite2D.play("Ataque_tox")
 
 
 # --- DAÑO Y MUERTE ---
 func _recibir_daño(cantidad):
-	if No_esta_muerto:
+	if esta_muerto:
 		return 
 	vida_actual -= cantidad
 	print("Daño recibido:", cantidad)
@@ -141,10 +141,10 @@ func _recibir_daño(cantidad):
 
 
 func morir():
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	
-	No_esta_muerto = true
+	esta_muerto = true
 	atacando = false
 	
 	velocity = Vector2.ZERO
@@ -157,7 +157,7 @@ func morir():
 
 # --- DETECCIÓN DE GOLPES ---
 func _on_area_daño_area_entered(area: Area2D) -> void:
-	if No_esta_muerto:
+	if esta_muerto:
 		return
 	if area.is_in_group("golpe"):
 		_recibir_daño(1)

@@ -30,6 +30,7 @@ window/size/viewport_height=614
 "enemigo_daño"=""
 enemigo=""
 "enemigo_ataque_daño"="daño que recibe el jugador por el ataque del enemigo"
+salto_pared=""
 
 [input]
 
