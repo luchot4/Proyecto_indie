@@ -483,7 +483,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Wall_jump",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8bf7"]
@@ -510,9 +510,8 @@ animation = &"atack"
 [node name="animations" type="AnimatedSprite2D" parent="." unique_id=1763858101]
 position = Vector2(-0.5, 1)
 sprite_frames = SubResource("SpriteFrames_ws1bt")
-animation = &"Tomar_mate"
-frame = 7
-frame_progress = 1.0
+animation = &"Wall_jump"
+frame_progress = 0.09871895
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=999540303]
 position = Vector2(-1, 1.5)

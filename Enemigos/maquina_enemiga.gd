@@ -6,7 +6,7 @@ var esta_muerto = false
 var jugador_en_area = false
 var objetivo_jugador = null
 
-func _physics_process(delta: float):
+func _physics_process(_delta: float):
 	if esta_muerto:
 		return
 

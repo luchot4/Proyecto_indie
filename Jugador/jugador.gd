@@ -224,7 +224,7 @@ func _on_parpadeo_timer_timeout() -> void:
 	$animations.visible = not $animations.visible
 
 ##FUNCION PARA PODER PEGARSE Y SALTAR DE LA PARED
-func pegarse_y_saltar_pared(delta):
+func pegarse_y_saltar_pared(_delta):
 	##Si el raycast detecta la pared y salta
 	if $RayCast2D_WallJump.get_collider():
 		if $RayCast2D_WallJump.get_collider().is_in_group("salto pared") :
