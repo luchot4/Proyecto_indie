@@ -12,6 +12,9 @@ var jugador_en_area = false
 var objetivo_jugador = null  ## SE UTILIZA CUANDO EL JUGADOR ENTRA AL AREA Y PARA EL KNOCKBACK
 var direccion = 1 # 1 = derecha, -1 = izquierda
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+##KNOCKBACK VARIABLES
+var knockback : Vector2 = Vector2.ZERO
+var knockback_timer : float = 0.0
 
 func _ready():
 	$AnimatedSprite2D.play("Walking")
@@ -26,6 +29,11 @@ func _ready():
 func _physics_process(delta: float):
 	if esta_muerto:
 		return
+	if knockback_timer > 0.0:
+		velocity = knockback
+		knockback_timer -= delta
+		if knockback_timer <= 0.0:
+			knockback = Vector2.ZERO	
 	# Gravedad
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -135,10 +143,15 @@ func _recibir_daño(cantidad):
 	vida_actual -= cantidad
 	print("Daño recibido:", cantidad)
 	print("Vida actual:", vida_actual)
-
+	var knockback_direccion = Vector2(1, -0.3).normalized() # ejemplo
+	aplicar_knockbackCT(knockback_direccion, 250.0, 0.2)
 	if vida_actual <= 0:
 		morir()
 
+##FUNCION PARA EL KNOCKBACK
+func aplicar_knockbackCT(direccion: Vector2, force: float, knockback_duracion: float) -> void:
+	knockback = direccion * force
+	knockback_timer = knockback_duracion
 
 func morir():
 	if esta_muerto:

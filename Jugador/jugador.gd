@@ -162,10 +162,11 @@ func atacar_x():   #Funcion para cuando se presiona la "x" se ataque
 	var direction = sign(velocity.x)
 	if direction != 0:
 		$Area2D/CollisionAtaque.position.x = direction * abs($Area2D/CollisionAtaque.position.x)
-	$animations.play("Attack")
+	
 	await $animations.animation_finished
 	ataque = false
 	$Area2D/CollisionAtaque.disabled = true
+	
 func actualizar_hitbox():
 	var offset = abs($Area2D/CollisionAtaque.position.x)
 	if $animations.flip_h:
@@ -216,6 +217,7 @@ func _on_cool_down_timer_timeout() -> void:
 	$ParpadeoTimer.stop()
 	$animations.visible = true
 
+##SE USA EN LAS FUNCIONES DE ATAQUE DE LOS ENEMIGOS
 func aplicar_knockback(direccion: Vector2, force: float, knockback_duracion: float) -> void:
 	knockback = direccion * force
 	knockback_timer = knockback_duracion

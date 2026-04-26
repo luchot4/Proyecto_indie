@@ -193,7 +193,7 @@ size = Vector2(55, 51.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiym"]
 size = Vector2(21, 58)
 
-[node name="Carpincho_Toxico" type="CharacterBody2D" unique_id=1281633654]
+[node name="Carpincho_Toxico" type="CharacterBody2D" unique_id=1281633654 groups=["enemigo"]]
 collision_layer = 8
 script = ExtResource("2_ge1t4")
 
